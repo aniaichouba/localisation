@@ -1,0 +1,39 @@
+﻿
+
+@{
+    ViewData["Title"] = "Localisation et Vitesse";
+}
+
+<h1>Localisation et Vitesse de Marche</h1>
+<p id="latitude">Latitude :</p>
+<p id="longitude">Longitude :</p>
+<p id="speed">Vitesse :</p>
+
+@section Scripts {
+    <script>
+        // Utiliser JavaScript pour récupérer la localisation et la vitesse du client et les envoyer au serveur.
+
+        // Exemple de code pour la géolocalisation (à adapter selon les besoins) :
+        navigator.geolocation.watchPosition(function (position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var speed = position.coords.speed;
+
+            // Envoyer les données au serveur
+            fetch('/Home/UpdateLocation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ latitude: latitude, longitude: longitude, speed: speed })
+            });
+
+            // Mettre à jour les éléments HTML pour afficher les données
+            document.getElementById('latitude').textContent = 'Latitude : ' + latitude;
+            document.getElementById('longitude').textContent = 'Longitude : ' + longitude;
+            document.getElementById('speed').textContent = 'Vitesse : ' + speed;
+        });
+    </script>
+}
+
+
